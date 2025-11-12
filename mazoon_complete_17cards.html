@@ -1,0 +1,2874 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مزون - منصة كل عماني | 17 خدمة متكاملة">
+    <meta name="theme-color" content="#004740">
+    <title>مزون - منصة كل عماني 🇴🇲 | النسخة الكاملة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #004740;
+            --gold: #D4AF37;
+            --copper: #B87333;
+            --turquoise: #5A9BA8;
+            --bg-beige: #F9F9F4;
+            --white: #FFFFFF;
+            --text-dark: #2E3A35;
+            --text-secondary: #5C5C54;
+            --success: #0BA360;
+            --danger: #D64545;
+            --border: #E7E2D9;
+            --gradient-primary: linear-gradient(135deg, #004740, #5A9BA8);
+            --gradient-gold: linear-gradient(135deg, #D4AF37, #B87333);
+            --gradient-danger: linear-gradient(135deg, #D64545, #FF6B6B);
+            --gradient-success: linear-gradient(135deg, #0BA360, #4FD1C5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-beige);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        body.dark-mode {
+            --bg-beige: #1a1a1a;
+            --white: #2a2a2a;
+            --text-dark: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --border: #3a3a3a;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--gradient-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-logo {
+            font-size: 100px;
+            animation: pulse 1.5s infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .loading-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .loading-bar {
+            width: 300px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            animation: loading 2s ease-out forwards;
+        }
+
+        @keyframes loading {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-green);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--bg-beige);
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-btn:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,71,64,0.3);
+        }
+
+        .notif-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--danger);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* Search Bar */
+        .search-section {
+            background: var(--white);
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px;
+            border: 3px solid var(--border);
+            border-radius: 50px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: var(--bg-beige);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--turquoise);
+            box-shadow: 0 0 20px rgba(90,155,168,0.2);
+            background: var(--white);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--text-secondary);
+        }
+
+        .voice-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .voice-icon:hover {
+            color: var(--primary-green);
+        }
+
+        /* Breaking News Ticker */
+        .breaking-news {
+            background: var(--gradient-danger);
+            color: white;
+            padding: 12px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breaking-news-content {
+            display: flex;
+            animation: scroll 30s linear infinite;
+        }
+
+        .breaking-news-item {
+            white-space: nowrap;
+            padding: 0 50px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        @keyframes scroll {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* Reuters News Ticker */
+        .reuters-ticker {
+            background: #FF6B00;
+            color: white;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            height: 40px;
+            border-top: 2px solid #E85D00;
+            border-bottom: 2px solid #E85D00;
+        }
+
+        .reuters-header {
+            background: #E85D00;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: absolute;
+            left: 0;
+            z-index: 10;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .reuters-logo {
+            font-weight: 900;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .reuters-live {
+            font-size: 11px;
+            color: #FFE4B5;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .reuters-content {
+            flex: 1;
+            overflow: hidden;
+            margin-left: 120px;
+        }
+
+        .reuters-scroll {
+            display: flex;
+            animation: scrollReuters 60s linear infinite;
+            padding-left: 100%;
+        }
+
+        @keyframes scrollReuters {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+
+        .reuters-item {
+            white-space: nowrap;
+            padding: 0 60px;
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .reuters-ticker:hover .reuters-scroll {
+            animation-play-state: paused;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card Base Style */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title-icon {
+            font-size: 24px;
+        }
+
+        .card-action {
+            font-size: 12px;
+            color: var(--primary-green);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s;
+        }
+
+        .card-action:hover {
+            gap: 8px;
+            color: var(--turquoise);
+        }
+
+        .card-content {
+            padding: 20px;
+            min-height: 250px;
+        }
+
+        /* Special Cards Styles */
+        
+        /* 1. لقطة اليوم */
+        .card-photo {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+        }
+
+        .photo-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .photo-meta {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* 2. ويش صاير */
+        .trending-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .trending-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: var(--bg-beige);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .trending-item:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .trending-number {
+            width: 35px;
+            height: 35px;
+            background: var(--gradient-gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .trending-content {
+            flex: 1;
+        }
+
+        .trending-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .trending-meta {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        /* 3. News Card */
+        .news-featured {
+            background: var(--gradient-primary);
+            height: 150px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+        }
+
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .news-item {
+            padding: 10px;
+            background: var(--bg-beige);
+            border-radius: 8px;
+            border-right: 3px solid var(--primary-green);
+        }
+
+        .news-category {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--turquoise);
+            color: white;
+            border-radius: 12px;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .news-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .news-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* 4. Weather Card */
+        .weather-main {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .weather-temp {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .weather-condition {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .weather-detail {
+            text-align: center;
+            padding: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .prayer-times {
+            background: var(--bg-beige);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .prayer-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-green);
+        }
+
+        .prayers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .prayer-item {
+            text-align: center;
+            padding: 8px;
+            background: var(--white);
+            border-radius: 8px;
+        }
+
+        .prayer-name {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+        }
+
+        .prayer-time {
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        /* 5. Market Card */
+        .market-ticker {
+            background: var(--bg-beige);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .market-index {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .market-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .market-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .market-change {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+
+        .market-up {
+            background: rgba(11,163,96,0.1);
+            color: var(--success);
+        }
+
+        .market-down {
+            background: rgba(214,69,69,0.1);
+            color: var(--danger);
+        }
+
+        .stocks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stock-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background: var(--white);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        /* 6. Jobs Card */
+        .job-card {
+            background: var(--bg-beige);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-right: 4px solid var(--turquoise);
+        }
+
+        .job-company {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .job-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .job-company-name {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .job-details {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .job-tag {
+            padding: 3px 8px;
+            background: var(--white);
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .job-salary {
+            background: var(--gradient-gold);
+            color: white;
+        }
+
+        /* 7. Events Card */
+        .event-card {
+            background: linear-gradient(135deg, var(--gold), var(--copper));
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .event-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .event-date {
+            font-size: 14px;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .event-location {
+            font-size: 12px;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        /* 8. يومك العماني */
+        .omani-day {
+            background: var(--gradient-primary);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .omani-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .omani-quote {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .omani-author {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* 9. Knowledge Platform */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .knowledge-item {
+            background: var(--bg-beige);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .knowledge-item:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .knowledge-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .knowledge-label {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* 10. Sports Matches */
+        .match-card {
+            background: var(--bg-beige);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .match-teams {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .team {
+            text-align: center;
+        }
+
+        .team-logo {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .team-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .match-vs {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .match-time {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .match-league {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* 11. Tourism */
+        .tourism-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .tourism-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 100px;
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
+            display: flex;
+            align-items: flex-end;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .tourism-item:hover {
+            transform: scale(1.05);
+        }
+
+        .tourism-item:first-child {
+            grid-column: span 2;
+            height: 150px;
+        }
+
+        .tourism-info {
+            padding: 10px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            width: 100%;
+        }
+
+        .tourism-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .tourism-location {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        /* 12. Videos */
+        .video-card {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .video-play {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--danger);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-play:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        .video-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            font-size: 12px;
+        }
+
+        /* 13. Marketplace */
+        .market-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .market-item {
+            background: var(--bg-beige);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .market-item-img {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .market-item-name {
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .market-item-price {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        /* 14. Offers */
+        .offer-card {
+            background: var(--gradient-gold);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .offer-discount {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .offer-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .offer-code {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        /* 15. Travel */
+        .travel-destination {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .travel-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .travel-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .travel-price {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .travel-details {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* 16. Apps */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .app-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .app-item:hover {
+            transform: scale(1.1);
+        }
+
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            margin: 0 auto 8px;
+        }
+
+        .app-name {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .app-rating {
+            font-size: 10px;
+            color: var(--gold);
+        }
+
+        /* 17. Community */
+        .community-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            background: var(--bg-beige);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .community-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .post-item {
+            padding: 10px;
+            background: var(--bg-beige);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 3px;
+        }
+
+        .post-content {
+            margin-bottom: 5px;
+        }
+
+        .post-meta {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-green), #003830);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .footer-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .footer-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .footer-copyright {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header-top {
+                padding: 10px 15px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .header-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .search-input {
+                padding: 12px 45px;
+                font-size: 14px;
+            }
+            
+            .loading-text {
+                font-size: 24px;
+            }
+            
+            .loading-logo {
+                font-size: 80px;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+        .card:nth-child(9) { animation-delay: 0.9s; }
+        .card:nth-child(10) { animation-delay: 1.0s; }
+        .card:nth-child(11) { animation-delay: 1.1s; }
+        .card:nth-child(12) { animation-delay: 1.2s; }
+        .card:nth-child(13) { animation-delay: 1.3s; }
+        .card:nth-child(14) { animation-delay: 1.4s; }
+        .card:nth-child(15) { animation-delay: 1.5s; }
+        .card:nth-child(16) { animation-delay: 1.6s; }
+        .card:nth-child(17) { animation-delay: 1.7s; }
+
+        /* Dark Mode Specific */
+        body.dark-mode .card {
+            background: #2a2a2a;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .card-header {
+            border-bottom-color: #3a3a3a;
+        }
+
+        body.dark-mode .search-input {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .header-btn {
+            background: #2a2a2a;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--gradient-success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            transform: translateX(-400px);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: fadeInUp 0.3s ease;
+        }
+    </style>
+    
+    <!-- Additional Styles for New Cards -->
+    <style>
+        /* Vertical Scrolling for Stock/Bloomberg */
+        .vertical-scroll {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .vertical-scroll-content {
+            animation: scrollUp 20s linear infinite;
+        }
+
+        @keyframes scrollUp {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); }
+        }
+
+        .stock-ticker-item {
+            padding: 12px;
+            background: var(--bg-beige);
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .stock-ticker-item:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .stock-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .stock-price {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .stock-change-up {
+            color: var(--success);
+            font-size: 12px;
+        }
+
+        .stock-change-down {
+            color: var(--danger);
+            font-size: 12px;
+        }
+
+        /* Bloomberg Card Styles */
+        .bloomberg-card {
+            background: #000;
+            color: #00FF00;
+            padding: 15px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .bloomberg-title {
+            color: #FFA500;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .bloomberg-scroll {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bloomberg-scroll-content {
+            animation: scrollUpBloomberg 25s linear infinite;
+        }
+
+        @keyframes scrollUpBloomberg {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); }
+        }
+
+        .bloomberg-data-item {
+            padding: 8px;
+            border-bottom: 1px solid #00FF00;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        /* Calendar/Raznama Styles */
+        .calendar-container {
+            background: linear-gradient(135deg, #D4AF37, rgba(255,255,255,0.9));
+            padding: 15px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .calendar-month {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.8);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: var(--gold);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .calendar-day.today {
+            background: var(--gradient-gold);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(212,175,55,0.5);
+        }
+
+        .calendar-day.has-event {
+            border: 2px solid var(--gold);
+        }
+
+        .calendar-day.has-event::after {
+            content: '•';
+            position: absolute;
+            bottom: 2px;
+            color: var(--gold);
+            font-size: 16px;
+        }
+
+        .event-highlight {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .event-today {
+            background: linear-gradient(135deg, var(--gold), var(--copper));
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .event-today-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .event-today-location {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .events-upcoming {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .events-upcoming::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .events-upcoming::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 5px;
+        }
+
+        .upcoming-event {
+            min-width: 120px;
+            padding: 10px;
+            background: var(--white);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upcoming-event:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .upcoming-event-date {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .upcoming-event-title {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .calendar-ornament {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 5 L61 39 L95 39 L68 60 L79 95 L50 73 L21 95 L32 60 L5 39 L39 39 Z" fill="%23D4AF37"/></svg>');
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">🇴🇲</div>
+        <div class="loading-text">مزون - منصة كل عماني</div>
+        <div class="loading-subtitle">17 خدمة متكاملة في مكان واحد</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-top">
+            <div class="logo" onclick="scrollToTop()">
+                <span>🏛️</span>
+                <span>مزون</span>
+            </div>
+            
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleDarkMode()" title="الوضع الليلي">
+                    <span id="darkModeIcon">🌙</span>
+                </button>
+                <button class="header-btn" onclick="showSettings()" title="الإعدادات">
+                    <span>⚙️</span>
+                </button>
+                <button class="header-btn" onclick="showNotifications()" title="الإشعارات">
+                    <span>🔔</span>
+                    <span class="notif-badge">5</span>
+                </button>
+                <button class="header-btn" onclick="showProfile()" title="الملف الشخصي">
+                    <span>👤</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="search-section">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن الأخبار، الوظائف، الفعاليات، الخدمات...">
+                <span class="voice-icon" onclick="startVoiceSearch()">🎤</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breaking News Ticker - Local -->
+    <div class="breaking-news">
+        <div class="breaking-news-content">
+            <span class="breaking-news-item">🔴 عاجل: افتتاح مشروع ميناء الدقم الجديد بقيمة 800 مليون ريال</span>
+            <span class="breaking-news-item">📢 أسعار الوقود لشهر ديسمبر: انخفاض 5% على جميع الأنواع</span>
+            <span class="breaking-news-item">🎉 مهرجان مسقط 2025 يستقبل 2 مليون زائر حتى الآن</span>
+            <span class="breaking-news-item">⚽ المنتخب العماني يتأهل للدور النهائي في كأس الخليج</span>
+            <span class="breaking-news-item">🌡️ الأرصاد: انخفاض في درجات الحرارة الأسبوع القادم</span>
+        </div>
+    </div>
+
+    <!-- Reuters Arabic News Ticker -->
+    <div class="reuters-ticker">
+        <div class="reuters-header">
+            <span class="reuters-logo">رويترز</span>
+            <span class="reuters-live">● مباشر</span>
+        </div>
+        <div class="reuters-content">
+            <div class="reuters-scroll">
+                <span class="reuters-item">🌍 عاجل: الفيدرالي الأمريكي يشير إلى خفض أسعار الفائدة في 2025 مع انخفاض التضخم إلى 2.7%</span>
+                <span class="reuters-item">📈 وول ستريت يسجل رقماً قياسياً مع إغلاق S&P 500 فوق 5000 نقطة</span>
+                <span class="reuters-item">🛢️ أسعار النفط ترتفع إلى 95 دولار للبرميل وسط توترات الشرق الأوسط</span>
+                <span class="reuters-item">💱 اليورو/دولار ينخفض إلى 1.0750 مع تعزز الدولار</span>
+                <span class="reuters-item">🏦 بنك إنجلترا يُبقي الفائدة عند 5.25% بسبب مخاوف التضخم</span>
+                <span class="reuters-item">🚗 تسلا تعلن عن سيارة كهربائية بسعر 25 ألف دولار لعام 2025</span>
+                <span class="reuters-item">💼 معدل البطالة العالمي ينخفض إلى 4.9%، الأدنى منذ 2019</span>
+                <span class="reuters-item">🏭 نمو الناتج المحلي الصيني يتجاوز التوقعات بـ 5.2% للربع الثالث</span>
+                <span class="reuters-item">✈️ بوينج تحصل على طلبية بقيمة 50 مليار دولار من السعودية</span>
+                <span class="reuters-item">🌾 الأمم المتحدة تحذر من أزمة غذائية مع ارتفاع أسعار القمح لأعلى مستوى في 10 سنوات</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="cards-grid">
+            
+            <!-- 1. لقطة اليوم -->
+            <div class="card card-photo">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">📸</span>
+                        <span>لقطة اليوم</span>
+                    </div>
+                    <a href="#" class="card-action">المزيد ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="photo-container">
+                        <div class="photo-img">🏔️</div>
+                        <div class="photo-overlay">
+                            <div class="photo-title">جبل شمس في الشتاء</div>
+                            <div class="photo-meta">📍 الجبل الأخضر • 📷 أحمد البلوشي</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ويش صاير -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">🔥</span>
+                        <span>ويش صاير؟</span>
+                    </div>
+                    <a href="#" class="card-action">الكل ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="trending-list">
+                        <div class="trending-item">
+                            <div class="trending-number">1</div>
+                            <div class="trending-content">
+                                <div class="trending-title">#مهرجان_مسقط_2025</div>
+                                <div class="trending-meta">15.2K مشاركة • X</div>
+                            </div>
+                        </div>
+                        <div class="trending-item">
+                            <div class="trending-number">2</div>
+                            <div class="trending-content">
+                                <div class="trending-title">#وظائف_عمان</div>
+                                <div class="trending-meta">8.5K مشاركة • Instagram</div>
+                            </div>
+                        </div>
+                        <div class="trending-item">
+                            <div class="trending-number">3</div>
+                            <div class="trending-content">
+                                <div class="trending-title">#منتخب_عمان</div>
+                                <div class="trending-meta">12.1K مشاركة • Facebook</div>
+                            </div>
+                        </div>
+                        <div class="trending-item">
+                            <div class="trending-number">4</div>
+                            <div class="trending-content">
+                                <div class="trending-title">#صلالة_خريف</div>
+                                <div class="trending-meta">5.8K مشاركة • TikTok</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. أخبار عمان والعالم -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">📰</span>
+                        <span>أخبار عمان والعالم</span>
+                    </div>
+                    <a href="#" class="card-action">كل الأخبار ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="news-featured">📰</div>
+                    <div class="news-list">
+                        <div class="news-item">
+                            <span class="news-category">محلي</span>
+                            <div class="news-title">توقيع اتفاقيات استثمارية بقيمة 2 مليار ريال</div>
+                            <div class="news-time">منذ 30 دقيقة</div>
+                        </div>
+                        <div class="news-item">
+                            <span class="news-category">اقتصاد</span>
+                            <div class="news-title">ارتفاع أسعار النفط العماني إلى 85 دولار</div>
+                            <div class="news-time">منذ ساعة</div>
+                        </div>
+                        <div class="news-item">
+                            <span class="news-category">عالمي</span>
+                            <div class="news-title">قمة دول الخليج تناقش التعاون الاقتصادي</div>
+                            <div class="news-time">منذ ساعتين</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. الطقس ومواعيد الصلاة -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">🌤️</span>
+                        <span>الطقس ومواعيد الصلاة</span>
+                    </div>
+                    <a href="#" class="card-action">التفاصيل ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="weather-main">
+                        <div class="weather-temp">28°</div>
+                        <div class="weather-condition">صافي ☀️ • مسقط</div>
+                        <div class="weather-details">
+                            <div class="weather-detail">
+                                <div>💧</div>
+                                <div>65%</div>
+                            </div>
+                            <div class="weather-detail">
+                                <div>🌬️</div>
+                                <div>15 كم/س</div>
+                            </div>
+                            <div class="weather-detail">
+                                <div>👁️</div>
+                                <div>10 كم</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prayer-times">
+                        <div class="prayer-title">🕌 مواعيد الصلاة اليوم</div>
+                        <div class="prayers-grid">
+                            <div class="prayer-item">
+                                <div class="prayer-name">الفجر</div>
+                                <div class="prayer-time">04:52</div>
+                            </div>
+                            <div class="prayer-item">
+                                <div class="prayer-name">الشروق</div>
+                                <div class="prayer-time">06:15</div>
+                            </div>
+                            <div class="prayer-item">
+                                <div class="prayer-name">الظهر</div>
+                                <div class="prayer-time">11:57</div>
+                            </div>
+                            <div class="prayer-item">
+                                <div class="prayer-name">العصر</div>
+                                <div class="prayer-time">15:15</div>
+                            </div>
+                            <div class="prayer-item">
+                                <div class="prayer-name">المغرب</div>
+                                <div class="prayer-time">17:42</div>
+                            </div>
+                            <div class="prayer-item">
+                                <div class="prayer-name">العشاء</div>
+                                <div class="prayer-time">19:12</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. بورصة مسقط -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">📊</span>
+                        <span>بورصة مسقط</span>
+                    </div>
+                    <a href="#" class="card-action">التداول المباشر ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="market-ticker" style="background: linear-gradient(135deg, var(--primary-green), var(--turquoise)); color: white; padding: 15px;">
+                        <div class="market-index">
+                            <div>
+                                <div class="market-name" style="color: white;">مؤشر MSX30</div>
+                                <div class="market-value" style="color: white;">4,523.45</div>
+                            </div>
+                            <div class="market-change market-up" style="background: rgba(255,255,255,0.2); padding: 5px 10px;">⬆️ +2.34%</div>
+                        </div>
+                    </div>
+                    <div class="vertical-scroll">
+                        <div class="vertical-scroll-content">
+                            <div class="stock-ticker-item">
+                                <div>
+                                    <div class="stock-name">بنك مسقط</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary);">BKMB</div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="stock-price">0.425</div>
+                                    <div class="stock-change-up">▲ +2.4%</div>
+                                </div>
+                            </div>
+                            <div class="stock-ticker-item">
+                                <div>
+                                    <div class="stock-name">عمانتل</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary);">OTEL</div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="stock-price">0.089</div>
+                                    <div class="stock-change-down">▼ -0.9%</div>
+                                </div>
+                            </div>
+                            <div class="stock-ticker-item">
+                                <div>
+                                    <div class="stock-name">النهضة للخدمات</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary);">NRCS</div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="stock-price">0.112</div>
+                                    <div class="stock-change-up">▲ +1.2%</div>
+                                </div>
+                            </div>
+                            <div class="stock-ticker-item">
+                                <div>
+                                    <div class="stock-name">بنك ظفار</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary);">BKDB</div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="stock-price">0.098</div>
+                                    <div class="stock-change-up">▲ +0.5%</div>
+                                </div>
+                            </div>
+                            <div class="stock-ticker-item">
+                                <div>
+                                    <div class="stock-name">أوريدو</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary);">ORDS</div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="stock-price">0.456</div>
+                                    <div class="stock-change-down">▼ -1.3%</div>
+                                </div>
+                            </div>
+                            <div class="stock-ticker-item">
+                                <div>
+                                    <div class="stock-name">صناعة عُمان</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary);">OIND</div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="stock-price">0.234</div>
+                                    <div class="stock-change-up">▲ +3.1%</div>
+                                </div>
+                            </div>
+                            <div class="stock-ticker-item">
+                                <div>
+                                    <div class="stock-name">الأنوار القابضة</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary);">ANHI</div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="stock-price">0.178</div>
+                                    <div class="stock-change-up">▲ +0.8%</div>
+                                </div>
+                            </div>
+                            <div class="stock-ticker-item">
+                                <div>
+                                    <div class="stock-name">شل عُمان</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary);">MHAS</div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="stock-price">0.892</div>
+                                    <div class="stock-change-down">▼ -2.1%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloomberg Arabic Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">💹</span>
+                        <span>بلومبيرغ - الأسواق العالمية</span>
+                    </div>
+                    <a href="#" class="card-action">المزيد ←</a>
+                </div>
+                <div class="card-content" style="padding: 0;">
+                    <div class="bloomberg-card">
+                        <div class="bloomberg-title">BLOOMBERG | البورصات العالمية</div>
+                        <div class="bloomberg-scroll">
+                            <div class="bloomberg-scroll-content">
+                                <div class="bloomberg-data-item">
+                                    <span>S&P 500</span>
+                                    <span>5,021.84 <span style="color: #00FF00;">▲ +0.62%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>داو جونز</span>
+                                    <span>38,521.36 <span style="color: #00FF00;">▲ +0.40%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>ناسداك</span>
+                                    <span>15,975.25 <span style="color: #00FF00;">▲ +0.85%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>فوتسي 100</span>
+                                    <span>7,721.25 <span style="color: #FF0000;">▼ -0.22%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>داكس الألماني</span>
+                                    <span>16,892.15 <span style="color: #00FF00;">▲ +0.35%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>نيكي الياباني</span>
+                                    <span>38,521.25 <span style="color: #00FF00;">▲ +1.25%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>الذهب</span>
+                                    <span>$2,045.50 <span style="color: #00FF00;">▲ +0.8%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>الفضة</span>
+                                    <span>$24.85 <span style="color: #FF0000;">▼ -0.5%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>النفط الخام</span>
+                                    <span>$95.25 <span style="color: #00FF00;">▲ +2.3%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>بيتكوين</span>
+                                    <span>$52,350 <span style="color: #00FF00;">▲ +3.2%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>إيثريوم</span>
+                                    <span>$2,985 <span style="color: #00FF00;">▲ +2.8%</span></span>
+                                </div>
+                                <div class="bloomberg-data-item">
+                                    <span>يورو/دولار</span>
+                                    <span>1.0750 <span style="color: #FF0000;">▼ -0.15%</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 10px; border-top: 1px solid #00FF00; text-align: center; font-size: 11px; color: #FFA500;">
+                            التحديث كل 10 ثواني • البيانات متأخرة 15 دقيقة
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. الوظائف -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">💼</span>
+                        <span>الوظائف</span>
+                    </div>
+                    <a href="#" class="card-action">كل الوظائف ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="job-card">
+                        <div class="job-company">
+                            <div class="company-logo">💻</div>
+                            <div>
+                                <div class="job-title">مهندس برمجيات</div>
+                                <div class="job-company-name">شركة التقنية العمانية</div>
+                            </div>
+                        </div>
+                        <div class="job-details">
+                            <span class="job-tag">مسقط</span>
+                            <span class="job-tag">دوام كامل</span>
+                            <span class="job-tag job-salary">800-1200 ر.ع</span>
+                        </div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-company">
+                            <div class="company-logo">🏦</div>
+                            <div>
+                                <div class="job-title">محاسب أول</div>
+                                <div class="job-company-name">بنك التنمية</div>
+                            </div>
+                        </div>
+                        <div class="job-details">
+                            <span class="job-tag">صلالة</span>
+                            <span class="job-tag">دوام كامل</span>
+                            <span class="job-tag job-salary">600-900 ر.ع</span>
+                        </div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-company">
+                            <div class="company-logo">🏗️</div>
+                            <div>
+                                <div class="job-title">مدير مشروع</div>
+                                <div class="job-company-name">مجموعة الإنشاءات</div>
+                            </div>
+                        </div>
+                        <div class="job-details">
+                            <span class="job-tag">صحار</span>
+                            <span class="job-tag">دوام كامل</span>
+                            <span class="job-tag job-salary">1500-2000 ر.ع</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. رزنامة عُمان -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">📅</span>
+                        <span>رزنامة عُمان</span>
+                    </div>
+                    <a href="#" class="card-action">التقويم الكامل ←</a>
+                </div>
+                <div class="card-content" style="padding: 0;">
+                    <div class="calendar-container">
+                        <div class="calendar-ornament"></div>
+                        <div class="calendar-header">
+                            <div class="calendar-month">نوفمبر 2025</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">تابع أهم فعاليات السلطنة طوال العام</div>
+                        </div>
+                        
+                        <!-- Today's Event -->
+                        <div class="event-today">
+                            <div style="font-size: 40px; text-align: center; margin-bottom: 10px;">🎊</div>
+                            <div class="event-today-title">فعالية اليوم: مهرجان مسقط 2025</div>
+                            <div class="event-today-location">📍 حديقة القرم الطبيعية • 🕐 4:00 مساءً</div>
+                            <button style="margin-top: 10px; padding: 8px 20px; background: rgba(255,255,255,0.2); border: 1px solid white; border-radius: 20px; color: white; cursor: pointer; font-size: 12px;">
+                                عرض التفاصيل
+                            </button>
+                        </div>
+
+                        <!-- Calendar Grid -->
+                        <div class="calendar-grid">
+                            <div class="calendar-day" style="font-size: 10px; font-weight: 700;">الأحد</div>
+                            <div class="calendar-day" style="font-size: 10px; font-weight: 700;">الإثنين</div>
+                            <div class="calendar-day" style="font-size: 10px; font-weight: 700;">الثلاثاء</div>
+                            <div class="calendar-day" style="font-size: 10px; font-weight: 700;">الأربعاء</div>
+                            <div class="calendar-day" style="font-size: 10px; font-weight: 700;">الخميس</div>
+                            <div class="calendar-day" style="font-size: 10px; font-weight: 700;">الجمعة</div>
+                            <div class="calendar-day" style="font-size: 10px; font-weight: 700;">السبت</div>
+                            
+                            <div class="calendar-day">1</div>
+                            <div class="calendar-day">2</div>
+                            <div class="calendar-day has-event">3</div>
+                            <div class="calendar-day">4</div>
+                            <div class="calendar-day today">5</div>
+                            <div class="calendar-day has-event">6</div>
+                            <div class="calendar-day">7</div>
+                            <div class="calendar-day has-event">8</div>
+                            <div class="calendar-day">9</div>
+                            <div class="calendar-day has-event">10</div>
+                            <div class="calendar-day">11</div>
+                            <div class="calendar-day">12</div>
+                            <div class="calendar-day has-event">13</div>
+                            <div class="calendar-day">14</div>
+                            <div class="calendar-day has-event">15</div>
+                            <div class="calendar-day">16</div>
+                            <div class="calendar-day">17</div>
+                            <div class="calendar-day has-event">18</div>
+                            <div class="calendar-day">19</div>
+                            <div class="calendar-day has-event">20</div>
+                            <div class="calendar-day">21</div>
+                            <div class="calendar-day">22</div>
+                            <div class="calendar-day has-event">23</div>
+                            <div class="calendar-day">24</div>
+                            <div class="calendar-day has-event">25</div>
+                            <div class="calendar-day">26</div>
+                            <div class="calendar-day">27</div>
+                            <div class="calendar-day">28</div>
+                            <div class="calendar-day">29</div>
+                            <div class="calendar-day">30</div>
+                        </div>
+
+                        <!-- Upcoming Events -->
+                        <div style="font-size: 14px; font-weight: 700; margin: 15px 0 10px; color: var(--primary-green);">فعاليات الأسبوع القادم</div>
+                        <div class="events-upcoming">
+                            <div class="upcoming-event">
+                                <div class="upcoming-event-date">6 نوفمبر</div>
+                                <div style="font-size: 20px; margin: 5px 0;">📚</div>
+                                <div class="upcoming-event-title">معرض الكتاب</div>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="upcoming-event-date">8 نوفمبر</div>
+                                <div style="font-size: 20px; margin: 5px 0;">🎨</div>
+                                <div class="upcoming-event-title">معرض الفنون</div>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="upcoming-event-date">10 نوفمبر</div>
+                                <div style="font-size: 20px; margin: 5px 0;">🏃</div>
+                                <div class="upcoming-event-title">ماراثون مسقط</div>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="upcoming-event-date">13 نوفمبر</div>
+                                <div style="font-size: 20px; margin: 5px 0;">🎭</div>
+                                <div class="upcoming-event-title">مهرجان المسرح</div>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="upcoming-event-date">15 نوفمبر</div>
+                                <div style="font-size: 20px; margin: 5px 0;">🎪</div>
+                                <div class="upcoming-event-title">كرنفال الأطفال</div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button style="flex: 1; padding: 10px; background: var(--white); border: 2px solid var(--gold); border-radius: 10px; color: var(--primary-green); font-weight: 600; cursor: pointer; font-size: 12px;">
+                                📍 افتح الخريطة
+                            </button>
+                            <button style="flex: 1; padding: 10px; background: var(--gold); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; font-size: 12px;">
+                                📅 أضف لتقويمك
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. يومك العماني -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">🎊</span>
+                        <span>يومك العماني</span>
+                    </div>
+                    <a href="#" class="card-action">المزيد ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="omani-day">
+                        <div class="omani-icon">🏺</div>
+                        <div class="omani-quote">"الصبر مفتاح الفرج، والعمل سر النجاح"</div>
+                        <div class="omani-author">- مثل عماني</div>
+                    </div>
+                    <div style="margin-top: 15px; padding: 15px; background: var(--bg-beige); border-radius: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">💡 هل تعلم؟</div>
+                        <div style="font-size: 12px; line-height: 1.6;">
+                            قلعة نزوى التاريخية بُنيت في القرن السابع عشر وتعتبر من أكبر القلاع في شبه الجزيرة العربية
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. منصة المعرفة -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">📚</span>
+                        <span>منصة المعرفة</span>
+                    </div>
+                    <a href="#" class="card-action">استكشف ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="knowledge-grid">
+                        <div class="knowledge-item">
+                            <div class="knowledge-icon">🏫</div>
+                            <div class="knowledge-label">المدارس</div>
+                        </div>
+                        <div class="knowledge-item">
+                            <div class="knowledge-icon">🎓</div>
+                            <div class="knowledge-label">الجامعات</div>
+                        </div>
+                        <div class="knowledge-item">
+                            <div class="knowledge-icon">📖</div>
+                            <div class="knowledge-label">المكتبة</div>
+                        </div>
+                        <div class="knowledge-item">
+                            <div class="knowledge-icon">💡</div>
+                            <div class="knowledge-label">دورات</div>
+                        </div>
+                        <div class="knowledge-item">
+                            <div class="knowledge-icon">🔬</div>
+                            <div class="knowledge-label">أبحاث</div>
+                        </div>
+                        <div class="knowledge-item">
+                            <div class="knowledge-icon">🏆</div>
+                            <div class="knowledge-label">منح دراسية</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. مواعيد المباريات العالمية -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">⚽</span>
+                        <span>مواعيد المباريات العالمية</span>
+                    </div>
+                    <a href="#" class="card-action">الجدول الكامل ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="match-card">
+                        <div class="match-teams">
+                            <div class="team">
+                                <div class="team-logo">🔴</div>
+                                <div class="team-name">ريال مدريد</div>
+                            </div>
+                            <div class="match-vs">VS</div>
+                            <div class="team">
+                                <div class="team-logo">🔵</div>
+                                <div class="team-name">برشلونة</div>
+                            </div>
+                        </div>
+                        <div class="match-time">20:00</div>
+                        <div class="match-league">الدوري الإسباني</div>
+                    </div>
+                    <div class="match-card">
+                        <div class="match-teams">
+                            <div class="team">
+                                <div class="team-logo">⚪</div>
+                                <div class="team-name">مان سيتي</div>
+                            </div>
+                            <div class="match-vs">VS</div>
+                            <div class="team">
+                                <div class="team-logo">🔴</div>
+                                <div class="team-name">ليفربول</div>
+                            </div>
+                        </div>
+                        <div class="match-time">22:30</div>
+                        <div class="match-league">الدوري الإنجليزي</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. الوجهات السياحية -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">🏖️</span>
+                        <span>الوجهات السياحية</span>
+                    </div>
+                    <a href="#" class="card-action">اكتشف ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="tourism-gallery">
+                        <div class="tourism-item">
+                            <div class="tourism-info">
+                                <div class="tourism-name">شاطئ القرم</div>
+                                <div class="tourism-location">مسقط</div>
+                            </div>
+                        </div>
+                        <div class="tourism-item" style="background: linear-gradient(135deg, #fa709a, #fee140);">
+                            <div class="tourism-info">
+                                <div class="tourism-name">جبل شمس</div>
+                                <div class="tourism-location">الداخلية</div>
+                            </div>
+                        </div>
+                        <div class="tourism-item" style="background: linear-gradient(135deg, #30cfd0, #330867);">
+                            <div class="tourism-info">
+                                <div class="tourism-name">وادي بني خالد</div>
+                                <div class="tourism-location">الشرقية</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px; padding: 12px; background: var(--bg-beige); border-radius: 10px; text-align: center;">
+                        <div style="font-size: 18px; margin-bottom: 5px;">🏝️</div>
+                        <div style="font-size: 12px; font-weight: 600;">رحلة اليوم: جزر الديمانيات</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">45 دقيقة من مسقط</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. الفيديوهات -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">🎬</span>
+                        <span>الفيديوهات</span>
+                    </div>
+                    <a href="#" class="card-action">شاهد الكل ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="video-card">
+                        <div class="video-play">▶️</div>
+                        <div class="video-title">جولة في مهرجان مسقط 2025</div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-play">▶️</div>
+                        <div class="video-title">أجمل 10 أماكن سياحية في عمان</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13. السوق/الحارة -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">🛒</span>
+                        <span>السوق/الحارة</span>
+                    </div>
+                    <a href="#" class="card-action">تصفح الكل ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="market-items">
+                        <div class="market-item">
+                            <div class="market-item-img">📱</div>
+                            <div class="market-item-name">آيفون 15</div>
+                            <div class="market-item-price">350 ر.ع</div>
+                        </div>
+                        <div class="market-item">
+                            <div class="market-item-img">🚗</div>
+                            <div class="market-item-name">كامري 2020</div>
+                            <div class="market-item-price">8,500 ر.ع</div>
+                        </div>
+                        <div class="market-item">
+                            <div class="market-item-img">🏠</div>
+                            <div class="market-item-name">شقة للإيجار</div>
+                            <div class="market-item-price">250 ر.ع</div>
+                        </div>
+                        <div class="market-item">
+                            <div class="market-item-img">💻</div>
+                            <div class="market-item-name">لابتوب Dell</div>
+                            <div class="market-item-price">180 ر.ع</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px; text-align: center;">
+                        <button style="padding: 10px 30px; background: var(--gradient-primary); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
+                            + أضف إعلانك
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 14. العروض -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">🏷️</span>
+                        <span>العروض</span>
+                    </div>
+                    <a href="#" class="card-action">كل العروض ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="offer-card">
+                        <span class="offer-badge">محدود</span>
+                        <div class="offer-discount">50% خصم</div>
+                        <div class="offer-title">على جميع الملابس الشتوية</div>
+                        <div class="offer-code">كود: WINTER50</div>
+                    </div>
+                    <div class="offer-card" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                        <span class="offer-badge">اليوم فقط</span>
+                        <div class="offer-discount">اشتر 1 واحصل على 1 مجاناً</div>
+                        <div class="offer-title">في مطاعم البرجر</div>
+                        <div class="offer-code">كود: BURGER2</div>
+                    </div>
+                    <div class="offer-card" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                        <span class="offer-badge">نهاية الأسبوع</span>
+                        <div class="offer-discount">30% خصم</div>
+                        <div class="offer-title">على تذاكر السينما</div>
+                        <div class="offer-code">كود: MOVIE30</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15. المرحال -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">✈️</span>
+                        <span>المرحال</span>
+                    </div>
+                    <a href="#" class="card-action">خطط رحلتك ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="travel-destination">
+                        <div class="travel-icon">🏝️</div>
+                        <div class="travel-title">رحلة إلى دبي</div>
+                        <div class="travel-price">150 ر.ع</div>
+                        <div class="travel-details">3 أيام / 2 ليالي • شامل الإقامة</div>
+                    </div>
+                    <div class="travel-destination" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                        <div class="travel-icon">🕌</div>
+                        <div class="travel-title">عمرة رمضان</div>
+                        <div class="travel-price">450 ر.ع</div>
+                        <div class="travel-details">7 أيام • فنادق 5 نجوم</div>
+                    </div>
+                    <div class="travel-destination" style="background: linear-gradient(135deg, #30cfd0, #330867);">
+                        <div class="travel-icon">🏔️</div>
+                        <div class="travel-title">جورجيا</div>
+                        <div class="travel-price">320 ر.ع</div>
+                        <div class="travel-details">5 أيام • شامل الجولات</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16. التطبيقات -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">📱</span>
+                        <span>التطبيقات</span>
+                    </div>
+                    <a href="#" class="card-action">المتجر ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="apps-grid">
+                        <div class="app-item">
+                            <div class="app-icon">🏦</div>
+                            <div class="app-name">بنكي</div>
+                            <div class="app-rating">⭐ 4.8</div>
+                        </div>
+                        <div class="app-item">
+                            <div class="app-icon" style="background: var(--gradient-gold);">🚖</div>
+                            <div class="app-name">عُمان تاكسي</div>
+                            <div class="app-rating">⭐ 4.5</div>
+                        </div>
+                        <div class="app-item">
+                            <div class="app-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">🍔</div>
+                            <div class="app-name">طلباتي</div>
+                            <div class="app-rating">⭐ 4.7</div>
+                        </div>
+                        <div class="app-item">
+                            <div class="app-icon" style="background: var(--gradient-success);">📋</div>
+                            <div class="app-name">الخدمات</div>
+                            <div class="app-rating">⭐ 4.6</div>
+                        </div>
+                        <div class="app-item">
+                            <div class="app-icon" style="background: var(--gradient-danger);">🏥</div>
+                            <div class="app-name">صحتي</div>
+                            <div class="app-rating">⭐ 4.9</div>
+                        </div>
+                        <div class="app-item">
+                            <div class="app-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">🎓</div>
+                            <div class="app-name">منصة التعليم</div>
+                            <div class="app-rating">⭐ 4.4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 17. المجتمع -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">👥</span>
+                        <span>المجتمع</span>
+                    </div>
+                    <a href="#" class="card-action">انضم الآن ←</a>
+                </div>
+                <div class="card-content">
+                    <div class="community-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">45.2K</div>
+                            <div class="stat-label">عضو نشط</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">128</div>
+                            <div class="stat-label">منتدى</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3.5K</div>
+                            <div class="stat-label">موضوع اليوم</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">892</div>
+                            <div class="stat-label">متصل الآن</div>
+                        </div>
+                    </div>
+                    <div class="community-posts">
+                        <div class="post-item">
+                            <div class="post-author">أحمد البلوشي</div>
+                            <div class="post-content">ما رأيكم في المشروع التنموي الجديد في صلالة؟</div>
+                            <div class="post-meta">45 تعليق • 123 إعجاب</div>
+                        </div>
+                        <div class="post-item">
+                            <div class="post-author">فاطمة الحارثية</div>
+                            <div class="post-content">أفضل الأماكن للعائلات في مسقط؟</div>
+                            <div class="post-meta">28 تعليق • 67 إعجاب</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">🏛️</div>
+            <div class="footer-title">مزون - منصة كل عماني</div>
+            <div class="footer-subtitle">17 خدمة متكاملة في مكان واحد</div>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link">عن مزون</a>
+                <a href="#" class="footer-link">تواصل معنا</a>
+                <a href="#" class="footer-link">الخصوصية</a>
+                <a href="#" class="footer-link">الشروط والأحكام</a>
+                <a href="#" class="footer-link">الوظائف</a>
+                <a href="#" class="footer-link">المطورون</a>
+            </div>
+            
+            <div class="footer-social">
+                <div class="social-icon">📘</div>
+                <div class="social-icon">🐦</div>
+                <div class="social-icon">📷</div>
+                <div class="social-icon">📺</div>
+                <div class="social-icon">💬</div>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>© 2025 منصة مزون - جميع الحقوق محفوظة</p>
+                <p>صُنع بـ ❤️ في سلطنة عُمان 🇴🇲</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span>✅</span>
+        <span id="toastMessage">مرحباً بك في مزون!</span>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">العنوان</h2>
+            <div id="modalContent">المحتوى</div>
+            <button onclick="closeModal()" style="margin-top: 20px; padding: 10px 30px; background: var(--gradient-primary); color: white; border: none; border-radius: 20px; cursor: pointer;">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                showToast('مرحباً بك في مزون! 🎉');
+            }, 2500);
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Search input
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('darkModeIcon');
+            icon.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            showToast(document.body.classList.contains('dark-mode') ? 'تم تفعيل الوضع الليلي 🌙' : 'تم تفعيل الوضع النهاري ☀️');
+        }
+
+        function showSettings() {
+            showModal('الإعدادات', 'إعدادات المنصة ستكون متاحة قريباً');
+        }
+
+        function showNotifications() {
+            showModal('الإشعارات', `
+                <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px; margin-bottom: 10px;">
+                    <strong>📚 دورة جديدة:</strong> دورة في الذكاء الاصطناعي متاحة الآن
+                </div>
+                <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px; margin-bottom: 10px;">
+                    <strong>💼 وظيفة:</strong> 5 وظائف جديدة في مجالك
+                </div>
+                <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px; margin-bottom: 10px;">
+                    <strong>🎉 فعالية:</strong> مهرجان مسقط يبدأ غداً
+                </div>
+                <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px; margin-bottom: 10px;">
+                    <strong>📰 خبر عاجل:</strong> افتتاح مشروع جديد في صحار
+                </div>
+                <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px;">
+                    <strong>🏷️ عرض:</strong> خصم 50% على المطاعم المختارة
+                </div>
+            `);
+        }
+
+        function showProfile() {
+            showModal('الملف الشخصي', `
+                <div style="text-align: center;">
+                    <div style="font-size: 80px; margin-bottom: 20px;">👤</div>
+                    <h3>مرحباً بك!</h3>
+                    <p>مستخدم منصة مزون</p>
+                    <br>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: right;">
+                        <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px;">
+                            <strong>النقاط:</strong> 1,250
+                        </div>
+                        <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px;">
+                            <strong>المستوى:</strong> ذهبي
+                        </div>
+                        <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px;">
+                            <strong>المشاركات:</strong> 45
+                        </div>
+                        <div style="padding: 10px; background: var(--bg-beige); border-radius: 8px;">
+                            <strong>الإنجازات:</strong> 12
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                showToast(`جاري البحث عن: ${query} 🔍`);
+                document.getElementById('searchInput').value = '';
+            }
+        }
+
+        function startVoiceSearch() {
+            showToast('البحث الصوتي قيد التطوير 🎤');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function showModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update notification badge
+            const badge = document.querySelector('.notif-badge');
+            const currentCount = parseInt(badge.textContent);
+            if (Math.random() > 0.7) {
+                badge.textContent = currentCount + 1;
+            }
+        }, 30000);
+
+        // Simulate live Reuters updates
+        const reutersUpdates = [
+            '🚨 JUST IN: Apple announces breakthrough in quantum computing',
+            '💹 Bitcoin surges past $55,000 on institutional demand',
+            '🏢 Microsoft acquires gaming studio for $10 billion',
+            '⚡ BREAKING: New COVID variant detected in Europe',
+            '📊 Amazon stock splits 20-for-1 effective next month',
+            '🛫 Emirates orders 100 new A350 aircraft from Airbus',
+            '🔋 Toyota reveals solid-state battery with 1000km range',
+            '🏗️ Saudi NEOM project receives $500B investment boost'
+        ];
+
+        let reutersIndex = 0;
+        setInterval(() => {
+            const reutersScroll = document.querySelector('.reuters-scroll');
+            if (reutersScroll && Math.random() > 0.8) {
+                const newItem = document.createElement('span');
+                newItem.className = 'reuters-item';
+                newItem.textContent = reutersUpdates[reutersIndex % reutersUpdates.length];
+                newItem.style.color = '#FFD700';
+                newItem.style.fontWeight = 'bold';
+                reutersScroll.appendChild(newItem);
+                reutersIndex++;
+                
+                // Show notification
+                showToast('📰 خبر عاجل من رويترز!');
+            }
+        }, 45000);
+
+        // Update Bloomberg stock prices
+        setInterval(() => {
+            const stockItems = document.querySelectorAll('.bloomberg-item span');
+            stockItems.forEach(item => {
+                if (item.classList.contains('bloomberg-up') || item.classList.contains('bloomberg-down')) {
+                    const change = (Math.random() - 0.5) * 2;
+                    const isUp = change > 0;
+                    item.className = isUp ? 'bloomberg-up' : 'bloomberg-down';
+                    item.textContent = `${isUp ? '▲' : '▼'} ${Math.abs(change).toFixed(2)}%`;
+                }
+            });
+        }, 10000);
+
+        // Dynamic time update for prayer times
+        function updatePrayerHighlight() {
+            const now = new Date();
+            const hours = now.getHours();
+            const prayers = document.querySelectorAll('.prayer-item');
+            
+            prayers.forEach(prayer => {
+                prayer.style.background = '';
+            });
+            
+            if (hours >= 4 && hours < 6) prayers[0].style.background = 'var(--gradient-success)';
+            else if (hours >= 11 && hours < 13) prayers[2].style.background = 'var(--gradient-success)';
+            else if (hours >= 15 && hours < 16) prayers[3].style.background = 'var(--gradient-success)';
+            else if (hours >= 17 && hours < 18) prayers[4].style.background = 'var(--gradient-success)';
+            else if (hours >= 19 && hours < 20) prayers[5].style.background = 'var(--gradient-success)';
+        }
+        
+        updatePrayerHighlight();
+        setInterval(updatePrayerHighlight, 60000);
+
+        console.log('%c🇴🇲 مرحباً بك في منصة مزون!', 'font-size: 24px; font-weight: bold; color: #004740;');
+        console.log('%c17 خدمة متكاملة في مكان واحد', 'font-size: 14px; color: #5A9BA8;');
+        console.log('%c⚠️ تحذير: استخدام وحدة التحكم قد يعرض حسابك للخطر!', 'font-size: 12px; color: #D64545;');
+    </script>
+</body>
+</html>
